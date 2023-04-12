@@ -61,8 +61,8 @@
     <string name="updated_version">მიმდინარეობს ვერსიის განახლება %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">დაფის შენახვა</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">სტილუსის რეჟიმის ჩართვა</string>
+    <string name="disable_stylus">სტილუსის რეჟიმის გამორთვა</string>
     <string name="enable_whiteboard">დაფის ჩართვა</string>
     <string name="disable_whiteboard">დაფის გამორთვა</string>
     <string name="show_whiteboard">დაფის ჩვენება</string>
@@ -368,8 +368,8 @@
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">ბარათი დამალულია.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">გამოტოვებულია %d ბარათი.</item>
+        <item quantity="other">გამოტოვებულია %d ბარათი.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">%s ველის ჩამაგრება</string>
@@ -418,6 +418,6 @@
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
     </string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
+    <string name="media_sync_required_title">საჭიროა მედიაფაილების სინქრონიზაცია</string>
     <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
 </resources>

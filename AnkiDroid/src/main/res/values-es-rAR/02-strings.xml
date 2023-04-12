@@ -61,8 +61,8 @@
     <string name="updated_version">Actualizado a la versión %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Guardar pizarra</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Activar el modo del lápiz óptico</string>
+    <string name="disable_stylus">Desactivar el modo del lápiz óptico</string>
     <string name="enable_whiteboard">Activar pizarra</string>
     <string name="disable_whiteboard">Desactivar pizarra</string>
     <string name="show_whiteboard">Mostrar pizarra</string>

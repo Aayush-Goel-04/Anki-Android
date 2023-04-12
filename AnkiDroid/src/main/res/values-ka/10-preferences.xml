@@ -86,7 +86,7 @@
     <string name="full_screen_off">გამორთულია</string>
     <string name="full_screen_system">სისტემის ზოლების დამალვა</string>
     <string name="full_screen_complete">სისტემის ზოლების და პასუხის ღილაკების დამალვა</string>
-    <string name="answer_buttons_position" maxLength="41">Answer buttons position</string>
+    <string name="answer_buttons_position" maxLength="41">პასუხის ღილაკის ადგილმდებარეობა</string>
     <string-array name="answer_buttons_position_labels">
         <item>ზევით</item>
         <item>ქვევით</item>
@@ -151,10 +151,10 @@
     <string name="notification_minimum_cards_due">სასწავლოა %d-ზე მეტი ბარათი</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">ვიბრაცია</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">სინათლის ციმციმი</string>
-    <string name="timeout_answer_text" maxLength="41">Automatic display answer</string>
+    <string name="timeout_answer_text" maxLength="41">პასუხის ავტომატური ჩვენება</string>
     <string name="timeout_answer" maxLength="41">პასუხი დროის ამოწურვის შემთხვევაში</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Time to show answer</string>
+    <string name="timeout_answer_seconds" maxLength="41">დრო პასუხის ჩვენებამდე</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX წმ</string>
     <string name="timeout_question_seconds" maxLength="41">Time to show next question</string>
     <string name="select_locale_title">ენის არჩევა</string>
@@ -168,9 +168,9 @@
     <string name="vertical_centering" maxLength="41">ცენტრში მოთავსება</string>
     <string name="vertical_centering_summ">Center the content of cards vertically</string>
     <string name="pref_backup_max" maxLength="41">სარეზერვო ასლების მაქსიმალური რაოდენობა</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">ორმაგი შეხების შუალედის დრო (მილიწამებში)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
-    <string name="show_estimates" maxLength="41">Show button time</string>
+    <string name="show_estimates" maxLength="41">ღილაკზე დროის ჩვენება</string>
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
     <string name="show_large_answer_buttons" maxLength="41">დიდი პასუხის ღილაკების ჩვენება</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
@@ -186,7 +186,7 @@
     <string name="time_limit" maxLength="41">Timebox time limit</string>
     <string name="new_timezone" maxLength="41">ახალი სასაათო სარტყლის გათვალისწინება</string>
     <string name="day_offset_with_description" maxLength="41">ახალი დღის დასაწყისი</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">ნაშუაღამევის %s საათზე</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">შუაღამე</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="pref_keep_screen_on" maxLength="41">ეკრანი ჩართული დარჩეს</string>
@@ -260,7 +260,7 @@
     <string name="deck_conf_steps" maxLength="41">ნაბიჯები (წუთებში)</string>
     <string name="deck_conf_order" maxLength="41">თანმიმდევრობა</string>
     <string name="deck_conf_new_cards_day" maxLength="41">ახალი ბარათი/დღეში</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Graduating interval</string>
+    <string name="deck_conf_graduating_ivl" maxLength="41">გრადაციის შუალედი</string>
     <string name="deck_conf_days">XXX დღე</string>
     <string name="deck_conf_easy_ivl" maxLength="41">შუალედი მარტივი ბარათებისთვის</string>
     <string name="deck_conf_start_ease" maxLength="41">საწყისი სიმარტივე</string>
@@ -277,12 +277,12 @@
     <string name="deck_conf_max_ivl" maxLength="41">მაქსიმალური შუალედი</string>
     <string name="deck_conf_new_lps_ivl" maxLength="41">შუალედი ახლებისთვის</string>
     <string name="deck_conf_min_ivl" maxLength="41">მინიმალური შუალედი</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Leech threshold</string>
+    <string name="deck_conf_leech_thres" maxLength="41">შემაფერხებელი ბარათების ზღვარი</string>
     <string name="deck_conf_fails">XXX გადავიწყება</string>
     <string name="deck_conf_leech_action" maxLength="41">მოქმედება შემაფერხებელი ბარათებისთვის</string>
     <string name="deck_conf_max_time" maxLength="41">მაქსიმალური საპასუხო დრო</string>
     <string name="deck_conf_seconds">XXX წამი</string>
-    <string name="deck_conf_timer" maxLength="41">Show answer timer</string>
+    <string name="deck_conf_timer" maxLength="41">პასუხის წამზომის ჩვენება</string>
     <string name="deck_conf_autoplay" maxLength="41">აუდიოს ავტომატური დაკვრა</string>
     <string name="deck_conf_replayq" maxLength="41">კითხვის ხელახლა დაკვრა</string>
     <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
@@ -309,8 +309,8 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">გადადება</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_filter_2_check">მეორე ფილტრის გააქტიურება</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Custom steps (in minutes)</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Define custom steps</string>
+    <string name="deck_conf_cram_steps" maxLength="41">ინდივიდუალური ნაბიჯები (წუთებში)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">ინდივიდუალური ნაბიჯების განსაზღვრა</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">Enable notifications for this deck group</string>
     <string name="deck_conf_reminders_time" maxLength="41">შეხსენების დრო:</string>
     <!-- analytics options -->
@@ -386,8 +386,8 @@
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">შეცდომა</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">გამო-\nთვლა&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="one">%1$d file\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="one">%1$d ფაილი\n%2$s</item>
+        <item quantity="other">%1$d ფაილი\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">უხმარი მედიაფაილების წაშლა</string>

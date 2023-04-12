@@ -138,7 +138,7 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">অনুগ্রহ করে আগানোর জন্য অঙ্কিড্রইডকে \'storage\' পারমিশনের অনুমতি দেন</string>
-    <string name="startup_all_files_access_permission">Please grant AnkiDroid the ‘All files access’ permission to continue</string>
+    <string name="startup_all_files_access_permission">অনুগ্রহ করে আনকি-ড্রয়েড\'কে \'সকল ফাইলে প্রবেশাধিকার \' অনুমতি দিন।</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -244,10 +244,10 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
     <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">Migrating your data</string>
-    <string name="migration_successful_message">Migration successful</string>
-    <string name="migration_failed_message">Migration failed</string>
-    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
+    <string name="migrating_data_message">আপনার তথ্য সরিয়ে নেয়া হচ্ছে</string>
+    <string name="migration_successful_message">সরানোর কাজটি সফল হয়েছে</string>
+    <string name="migration_failed_message">সরানোর কাজটি ব্যর্থ হয়েছে</string>
+    <string name="migration_transferred_size">%2$.0f এমবি এর মধ্যে %1$.0f এমবি সরিয়ে নেয়া হয়েছে</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>

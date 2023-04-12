@@ -241,7 +241,7 @@
     <string name="migration_failed_message">移行に失敗しました</string>
     <string name="migration_transferred_size">%2$.0f MB 中 %1$.0f MB を移行しました</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">アクセスできないコレクション</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid"> Playストアのポリシーの変更により、AnkiDroidをアンインストールすると、再インストールしてもアンインストール前のコレクションにはアクセスできなくなりました。\n\nコレクションは\n%s\nに保存されており、復元可能です。 \n\n復元するための選択肢は次の通りです:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid"> Playストアのプライバシーポリシーの変更により、AnkiDroidはアンインストール前のコレクションにはアクセスできなくなりました。\n\nコレクションは\n%s\nに保存されており、復元可能です。 \n\n復元するための選択肢は次の通りです:</string>
     <string name="restore_data_from_ankiweb">AnkiWebから復元 (推奨)</string>
     <string name="install_non_play_store_ankidroid_recommended">フォルダへのアクセスを回復 (推奨)</string>
     <string name="install_non_play_store_ankidroid">フォルダへのアクセスを回復 (高度)</string>
