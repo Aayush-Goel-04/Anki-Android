@@ -12,6 +12,7 @@ on:
       - '**'
     paths:
       - '.github/workflows/**'
+      - 'AnkiDroid/**'
       - 'AnkiDroid/src/main/res**'
       - 'api/**'
       - 'lint-rules/**'
