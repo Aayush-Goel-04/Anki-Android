@@ -59,6 +59,18 @@ object Permissions {
     }
 
     /**
+     * On < Android 11, returns false.
+     * On >= Android 11, returns [isExternalStorageManager]
+     */
+    fun isExternalStorageManagerCompat(): Boolean {
+        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            return false
+        } else {
+            isExternalStorageManager()
+        }
+    }
+
+    /**
      * Check if we have write access permission to the external storage
      * @param context
      * @return
@@ -139,15 +151,5 @@ object Permissions {
         }
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&
             context.arePermissionsDefinedInAnkiDroidManifest(MANAGE_EXTERNAL_STORAGE)
-    }
-
-    /**
-     * Whether 'all files access' (permission: [MANAGE_EXTERNAL_STORAGE]) is granted on a device on Android 11 or later
-     */
-    fun allFileAccessPermissionGranted(context: Context): Boolean {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
-            return false
-        }
-        return hasPermission(context, MANAGE_EXTERNAL_STORAGE)
     }
 }

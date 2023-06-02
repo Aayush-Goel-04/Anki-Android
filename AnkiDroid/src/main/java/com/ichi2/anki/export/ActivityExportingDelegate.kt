@@ -38,6 +38,7 @@ import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
 import com.ichi2.anki.dialogs.ExportDialogParams
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.AnkiPackageExporter
 import com.ichi2.libanki.Collection
@@ -98,6 +99,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         }
     }
 
+    @NeedsTest("exporting deck with name containing apostrophe")
     override fun exportColAsApkgOrColpkg(path: String?, includeSched: Boolean, includeMedia: Boolean) {
         val exportPath = getExportFileName(path, "All Decks", includeSched)
 
@@ -178,9 +180,11 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             showThemedToast(activity, activity.resources.getString(R.string.apk_share_error), false)
             return
         }
+        val authority = "${activity.packageName}.apkgfileprovider"
+
         // Get a URI for the file to be shared via the FileProvider API
         val uri: Uri = try {
-            FileProvider.getUriForFile(activity, "com.ichi2.anki.apkgfileprovider", attachment)
+            FileProvider.getUriForFile(activity, authority, attachment)
         } catch (e: IllegalArgumentException) {
             Timber.e("Could not generate a valid URI for the apkg file")
             showThemedToast(activity, activity.resources.getString(R.string.apk_share_error), false)

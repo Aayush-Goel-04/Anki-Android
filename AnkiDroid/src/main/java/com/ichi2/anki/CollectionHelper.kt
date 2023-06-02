@@ -29,7 +29,7 @@ import com.ichi2.anki.preferences.Preferences
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
-import com.ichi2.preferences.PreferenceExtensions
+import com.ichi2.preferences.getOrSetString
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbFileTooNewException
@@ -71,7 +71,8 @@ open class CollectionHelper {
     /**
      * Opens the collection without checking to see if the directory exists.
      *
-     * path should be tested with File.exists() and File.canWrite() before this is called
+     * @param Path The path to the collection.anki2 database. Should be unicode.
+     * path should be tested with File.exists() and File.canWrite() before this is called.
      */
     private fun openCollection(context: Context, path: String): Collection {
         Timber.i("Begin openCollection: %s", path)
@@ -507,8 +508,8 @@ open class CollectionHelper {
          * @return Returns an array of [File]s reflecting the directories that AnkiDroid can access without storage permissions
          * @see android.content.Context.getExternalFilesDirs
          */
-        fun getAppSpecificExternalDirectories(context: Context): Array<File> {
-            return context.getExternalFilesDirs(null)
+        fun getAppSpecificExternalDirectories(context: Context): List<File> {
+            return context.getExternalFilesDirs(null).filterNotNull()
         }
 
         /**
@@ -544,17 +545,15 @@ open class CollectionHelper {
             return if (AnkiDroidApp.INSTRUMENTATION_TESTING) {
                 // create an "androidTest" directory inside the current collection directory which contains the test data
                 // "/AnkiDroid/androidTest" would be a new collection path
+                val currentCollectionDirectory = preferences.getOrSetString(PREF_COLLECTION_PATH) { getDefaultAnkiDroidDirectory(context) }
                 File(
-                    getDefaultAnkiDroidDirectory(context),
+                    currentCollectionDirectory,
                     "androidTest"
                 ).absolutePath
             } else if (ankiDroidDirectoryOverride != null) {
                 ankiDroidDirectoryOverride!!
             } else {
-                PreferenceExtensions.getOrSetString(
-                    preferences,
-                    PREF_COLLECTION_PATH
-                ) { getDefaultAnkiDroidDirectory(context) }
+                preferences.getOrSetString(PREF_COLLECTION_PATH) { getDefaultAnkiDroidDirectory(context) }
             }
         }
 
