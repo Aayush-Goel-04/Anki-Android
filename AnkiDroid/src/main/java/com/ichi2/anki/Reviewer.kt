@@ -169,10 +169,6 @@ open class Reviewer :
             finishWithAnimation(ActivityTransitionAnimation.Direction.END)
             return
         }
-        if (Intent.ACTION_VIEW == intent.action) {
-            Timber.d("onCreate() :: received Intent with action = %s", intent.action)
-            selectDeckFromExtra()
-        }
         mColorPalette = findViewById(R.id.whiteboard_editor)
         answerTimer = AnswerTimer(findViewById(R.id.card_time))
         mTextBarNew = findViewById(R.id.new_number)
@@ -190,6 +186,9 @@ open class Reviewer :
     override fun onResume() {
         answerTimer.resume()
         super.onResume()
+        if (answerField != null) {
+            answerField!!.focusWithKeyboard()
+        }
     }
 
     @NeedsTest("is hidden if flag is on app bar")
@@ -316,18 +315,6 @@ open class Reviewer :
         col.sched.deferReset()
     }
 
-    override fun setTitle() {
-        val title: String = if (colIsOpen()) {
-            Decks.basename(col.decks.current().getString("name"))
-        } else {
-            Timber.e("Could not set title in reviewer because collection closed")
-            ""
-        }
-        supportActionBar!!.title = title
-        super.setTitle(title)
-        supportActionBar!!.subtitle = ""
-    }
-
     override fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
         return when (fullscreenMode) {
             FullScreenMode.BUTTONS_ONLY -> R.layout.reviewer_fullscreen
@@ -342,6 +329,10 @@ open class Reviewer :
 
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
+        if (Intent.ACTION_VIEW == intent.action) {
+            Timber.d("onCreate() :: received Intent with action = %s", intent.action)
+            selectDeckFromExtra()
+        }
         // Load the first card and start reviewing. Uses the answer card
         // task to load a card, but since we send null
         // as the card to answer, no card will be answered.
@@ -436,12 +427,7 @@ open class Reviewer :
             }
             R.id.action_change_whiteboard_pen_color -> {
                 Timber.i("Reviewer:: Pen Color button pressed")
-                if (mColorPalette.visibility == View.GONE) {
-                    mColorPalette.visibility = View.VISIBLE
-                } else {
-                    mColorPalette.visibility = View.GONE
-                }
-                updateWhiteboardEditorPosition()
+                changeWhiteboardPenColor()
             }
             R.id.action_save_whiteboard -> {
                 Timber.i("Reviewer:: Save whiteboard button pressed")
@@ -457,9 +443,7 @@ open class Reviewer :
             }
             R.id.action_clear_whiteboard -> {
                 Timber.i("Reviewer:: Clear whiteboard button pressed")
-                if (whiteboard != null) {
-                    whiteboard!!.clear()
-                }
+                clearWhiteboard()
             }
             R.id.action_hide_whiteboard -> { // toggle whiteboard visibility
                 Timber.i("Reviewer:: Whiteboard visibility set to %b", !mShowWhiteboard)
@@ -546,6 +530,21 @@ open class Reviewer :
             mColorPalette.visibility = View.GONE
         }
         refreshActionBar()
+    }
+
+    public override fun clearWhiteboard() {
+        if (whiteboard != null) {
+            whiteboard!!.clear()
+        }
+    }
+
+    public override fun changeWhiteboardPenColor() {
+        if (mColorPalette.visibility == View.GONE) {
+            mColorPalette.visibility = View.VISIBLE
+        } else {
+            mColorPalette.visibility = View.GONE
+        }
+        updateWhiteboardEditorPosition()
     }
 
     override fun replayVoice() {

@@ -165,8 +165,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Kö</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Hittar tomma kort&#8230;</string>
-    <string name="confirm_cancel">Vill du avbryta?</string>
-    <string name="empty_cards_none">Inga tomma kort</string>
     <string name="empty_cards_count">Kort att ta bort: %d</string>
     <string name="empty_cards_deleted">Kort borttagna: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,7 +180,10 @@
     <string name="integrity_check_continue_anyway">Fortsätt ändå</string>
     <string name="integrity_check_insufficient_space">Databaskontrollen använder en stor mängd tillfällig lagring.\n\nDet rekommenderas starkt att du har minst %s ledigt utrymme på din enhet innan du fortsätter.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nDu har för närvarande %s gratis.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d kort med felaktiga hemkortlekar återställdes. Se manualen för vidare information.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">Kunde inte spela upp video</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Kunde inte ändra kortlek</string>

@@ -17,8 +17,12 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.WorkerThread
 import anki.backend.backendError
+import com.ichi2.anki.servicelayer.ValidatedMigrationSourceAndDestination
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.Storage.collection
@@ -57,12 +61,12 @@ object CollectionManager {
     var emulateOpenFailure = false
 
     /**
-     * Execute the provided block on a serial queue, to ensure concurrent access
-     * does not happen.
+     * Execute the provided block on a serial background queue, to ensure
+     * concurrent access does not happen.
+     *
+     * The background queue is run in a [Dispatchers.IO] context.
      * It's important that the block is not suspendable - if it were, it would allow
      * multiple requests to be interleaved when a suspend point was hit.
-     *
-     * TODO Allow suspendable blocks, rely on locking instead.
      *
      * TODO Disallow running functions that are supposed to be run inside the queue outside of it.
      *   For instance, this can be done by marking a [block] with a context
@@ -78,7 +82,7 @@ object CollectionManager {
      *
      *       context(Queue) suspend fun canOnlyBeRunInWithQueue()
      */
-    private suspend fun<T> withQueue(block: CollectionManager.() -> T): T {
+    private suspend fun<T> withQueue(@WorkerThread block: CollectionManager.() -> T): T {
         return withContext(queue) {
             this@CollectionManager.block()
         }
@@ -87,11 +91,13 @@ object CollectionManager {
     /**
      * Execute the provided block with the collection, opening if necessary.
      *
+     * Calls are serialized, and run in background [Dispatchers.IO] thread.
+     *
      * Parallel calls to this function are guaranteed to be serialized, so you can be
      * sure the collection won't be closed or modified by another thread. This guarantee
      * does not hold if legacy code calls [getColUnsafe].
      */
-    suspend fun <T> withCol(block: Collection.() -> T): T {
+    suspend fun <T> withCol(@WorkerThread block: Collection.() -> T): T {
         return withQueue {
             ensureOpenInner()
             block(collection!!)
@@ -105,7 +111,7 @@ object CollectionManager {
      * these two cases, it should wrap the return value of the block in a class (eg Optional),
      * instead of returning a nullable object.
      */
-    suspend fun<T> withOpenColOrNull(block: Collection.() -> T): T? {
+    suspend fun<T> withOpenColOrNull(@WorkerThread block: Collection.() -> T): T? {
         return withQueue {
             if (collection != null && !collection!!.dbClosed) {
                 block(collection!!)
@@ -218,13 +224,12 @@ object CollectionManager {
             throw BackendException.BackendDbException.BackendDbLockedException(backendError {})
         }
         if (collection == null || collection!!.dbClosed) {
-            val path = createCollectionPath()
+            val path = collectionPathInValidFolder()
             collection =
                 collection(AnkiDroidApp.instance, path, server = false, log = true, backend)
         }
     }
 
-    // TODO Move withQueue to call site
     suspend fun deleteCollectionDirectory() {
         withQueue {
             ensureClosedInner(save = false)
@@ -237,7 +242,7 @@ object CollectionManager {
 
     /** Ensures the AnkiDroid directory is created, then returns the path to the collection file
      * inside it. */
-    private fun createCollectionPath(): String {
+    fun collectionPathInValidFolder(): String {
         val dir = getCollectionDirectory().path
         CollectionHelper.initializeAnkiDroidDirectory(dir)
         return File(dir, "collection.anki2").absolutePath
@@ -383,7 +388,27 @@ object CollectionManager {
         withQueue {
             ensureClosedInner()
             ensureBackendInner()
-            importCollectionPackage(backend!!, createCollectionPath(), colpkgPath)
+            importCollectionPackage(backend!!, collectionPathInValidFolder(), colpkgPath)
+        }
+    }
+
+    /** Migrate collection and media databases to scoped storage.
+     * * Closes the collection, and performs the work in our queue so no
+     * other code can open the collection while the operation runs. Reopens
+     * at the end, and rolls back the path change if reopening fails.
+     */
+    suspend fun migrateEssentialFiles(context: Context, folders: ValidatedMigrationSourceAndDestination) {
+        withQueue {
+            ensureClosedInner(true)
+            val migrator = MigrateEssentialFiles(context, folders)
+            migrator.migrateFiles()
+            migrator.updateCollectionPath()
+            try {
+                ensureOpenInner()
+            } catch (e: Exception) {
+                migrator.restoreOldCollectionPath()
+                throw e
+            }
         }
     }
 

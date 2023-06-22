@@ -568,8 +568,6 @@ abstract class AbstractFlashcardViewer :
         refreshActionBar()
     }
 
-    protected abstract fun setTitle()
-
     // Finish initializing the activity after the collection has been correctly loaded
     public override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
@@ -601,7 +599,6 @@ abstract class AbstractFlashcardViewer :
         registerExternalStorageListener()
         restoreCollectionPreferences(col)
         initLayout()
-        setTitle()
         mHtmlGenerator = createInstance(this, typeAnswer!!, mBaseUrl!!)
 
         // Initialize text-to-speech. This is an asynchronous operation.
@@ -631,7 +628,6 @@ abstract class AbstractFlashcardViewer :
         }
         automaticAnswer.enable()
         // Reset the activity title
-        setTitle()
         updateActionBar()
         selectNavigationItem(-1)
     }
@@ -1275,7 +1271,7 @@ abstract class AbstractFlashcardViewer :
         if (mGesturesEnabled) {
             mGestureProcessor.init(preferences)
         }
-        if (preferences.getBoolean("keepScreenOn", false)) {
+        if (preferences.getBoolean("timeoutAnswer", false) || preferences.getBoolean("keepScreenOn", false)) {
             this.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
         return preferences
@@ -1782,6 +1778,14 @@ abstract class AbstractFlashcardViewer :
                     toggleWhiteboard()
                     true
                 }
+                ViewerCommand.CLEAR_WHITEBOARD -> {
+                    clearWhiteboard()
+                    true
+                }
+                ViewerCommand.CHANGE_WHITEBOARD_PEN_COLOR -> {
+                    changeWhiteboardPenColor()
+                    true
+                }
                 ViewerCommand.SHOW_HINT -> {
                     loadUrlInViewer("javascript: showHint();")
                     true
@@ -1811,6 +1815,14 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun toggleWhiteboard() {
+        // intentionally blank
+    }
+
+    protected open fun clearWhiteboard() {
+        // intentionally blank
+    }
+
+    protected open fun changeWhiteboardPenColor() {
         // intentionally blank
     }
 

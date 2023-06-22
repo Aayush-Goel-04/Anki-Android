@@ -48,7 +48,7 @@ class GeneralSettingsFragment : SettingsFragment() {
                 setValueIndex(valueIndex)
             }
             setOnPreferenceChangeListener { newValue ->
-                launchWithCol { set_config("addToCur", "0" == newValue) }
+                launchCatchingTask { withCol { set_config("addToCur", "0" == newValue) } }
             }
         }
         // Paste PNG
@@ -57,7 +57,7 @@ class GeneralSettingsFragment : SettingsFragment() {
         requirePreference<SwitchPreference>(R.string.paste_png_key).apply {
             launchCatchingTask { isChecked = withCol { get_config("pastePNG", false)!! } }
             setOnPreferenceChangeListener { newValue ->
-                launchWithCol { set_config("pastePNG", newValue) }
+                launchCatchingTask { withCol { set_config("pastePNG", newValue) } }
             }
         }
         // Error reporting mode
@@ -87,12 +87,12 @@ class GeneralSettingsFragment : SettingsFragment() {
         val systemLocale = getSystemLocale()
         requirePreference<ListPreference>(R.string.pref_language_key).apply {
             entries = arrayOf(getStringByLocale(R.string.language_system, systemLocale), *sortedLanguages.keys.toTypedArray())
-            entryValues = arrayOf(LanguageUtil.DEFAULT_LANGUAGE_TAG, *sortedLanguages.values.toTypedArray())
+            entryValues = arrayOf(LanguageUtil.SYSTEM_LANGUAGE_TAG, *sortedLanguages.values.toTypedArray())
             setOnPreferenceChangeListener { selectedLanguage ->
                 LanguageUtil.setDefaultBackendLanguages(selectedLanguage as String)
                 runBlocking { CollectionManager.discardBackend() }
 
-                val localeCode = if (selectedLanguage != LanguageUtil.DEFAULT_LANGUAGE_TAG) {
+                val localeCode = if (selectedLanguage != LanguageUtil.SYSTEM_LANGUAGE_TAG) {
                     selectedLanguage
                 } else {
                     null

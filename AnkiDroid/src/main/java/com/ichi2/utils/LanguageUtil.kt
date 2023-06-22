@@ -22,6 +22,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
+import com.ichi2.anki.AnkiDroidApp
 import net.ankiweb.rsdroid.BackendFactory
 import java.text.DateFormat
 import java.util.*
@@ -30,8 +31,7 @@ import java.util.*
  * Utility call for proving language related functionality.
  */
 object LanguageUtil {
-    /** locale value of the currently selected locale of the app */
-    const val DEFAULT_LANGUAGE_TAG = ""
+    const val SYSTEM_LANGUAGE_TAG = ""
 
     /** A list of all languages supported by AnkiDroid
      * Please modify LanguageUtilsTest if changing
@@ -207,23 +207,26 @@ object LanguageUtil {
     fun getSystemLocale(): Locale = getLocaleCompat(Resources.getSystem())!!
 
     /** If locale is not provided, the current locale will be used. */
-    fun setDefaultBackendLanguages(languageTag: String = DEFAULT_LANGUAGE_TAG) {
-        val locale = if (languageTag == DEFAULT_LANGUAGE_TAG) {
-            Locale.getDefault()
+    fun setDefaultBackendLanguages(languageTag: String? = null) {
+        val langCode = languageTag ?: AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
+            .getString("language", SYSTEM_LANGUAGE_TAG)!!
+
+        val localeLanguage = if (langCode == SYSTEM_LANGUAGE_TAG) {
+            getSystemLocale().language
         } else {
-            Locale.forLanguageTag(languageTag)
+            langCode
         }
-        BackendFactory.defaultLanguages = listOf(localeToBackendCode(locale))
+        BackendFactory.defaultLanguages = listOf(languageTagToBackendCode(localeLanguage))
     }
 
-    private fun localeToBackendCode(locale: Locale): String {
-        return when (locale.language) {
-            Locale("heb").language -> "he"
-            Locale("ind").language -> "id"
-            Locale("tgl").language -> "tl"
-            Locale("hi").language -> "hi-IN"
-            Locale("yue").language -> "zh-HK"
-            else -> locale.toLanguageTag()
+    private fun languageTagToBackendCode(languageTag: String): String {
+        return when (languageTag) {
+            "heb" -> "he"
+            "ind" -> "id"
+            "tgl" -> "tl"
+            "hi" -> "hi-IN"
+            "yue" -> "zh-HK"
+            else -> languageTag
         }
     }
 
